@@ -5,4 +5,12 @@ INSERT INTO `user` (id, username, password, role) VALUES ('4', 'user2', '1234', 
 INSERT INTO `user` (id, username, password, role) VALUES ('5', 'user3', '1234', 'user');
 INSERT INTO `user` (id, username, password, role) VALUES ('6', 'user4', '1234', 'user');
 
+
+
+INSERT INTO `class` (studentname, password, major) VALUES ('me', '1234', 'jiaoji');
+INSERT INTO `class` (studentname, password, major) VALUES ('a', '1234', 'jiaoji');
+INSERT INTO `class` (studentname, password, major) VALUES ('c', '1234', 'jiaoji');
+INSERT INTO `class` (studentname, password, major) VALUES ('b', '1234', 'jiaoji');
+INSERT INTO `class` (studentname, password, major) VALUES ('my', '1234', 'jiaoji');
+
 COMMIT;
