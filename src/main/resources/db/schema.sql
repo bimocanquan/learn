@@ -18,8 +18,8 @@ ALTER TABLE `user` ADD UNIQUE (`email`);
 ALTER TABLE `user` ADD UNIQUE (`phone`);
 
 
-DROP TABLE IF EXISTS `class`;
-CREATE TABLE `class` (
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
  `studentname` varchar(50) DEFAULT NULL comment '学生姓名',
   `password` varchar(255) DEFAULT NULL,
