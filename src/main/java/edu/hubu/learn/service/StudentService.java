@@ -3,6 +3,10 @@ package edu.hubu.learn.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import edu.hubu.learn.dao.StudentDao;
@@ -14,15 +18,32 @@ public class StudentService {
     @Autowired
     private StudentDao studentDao;
 
-    public Student getUser(Long id) {
+    public Student getStudent(Long id) {
         return studentDao.findById(id).get();
     }
 
-	public List<Student> getStudent(Long id) {
-		return null;
-	}
-
 	public List<Student> getStudents() {
-		return null;
+        return studentDao.findAll(new Sort(Direction.DESC, "id"));
+    }
+
+    public List<Student> searchStudent(String keyword) {
+        Student student = new Student();
+        stduent.setStudentname(keyword);
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("studentname", match->match.contains());
+        Example<Student> example = Example.of(stduent, matcher);
+        Sort sort = new Sort(Direction.DESC, "id");
+        return stduentDao.findAll(example, sort);
+    }
+
+    public Student addStudent(Student student) {
+        return studentDao.save(student);
+    }
+
+    public void deleteStudent(Long id) {
+        studentDao.deleteById(id);
+    }
+
+    public void modifyUser(Student student) {
+	stduentDao.save(student);
 	}
 }

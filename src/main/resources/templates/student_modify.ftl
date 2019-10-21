@@ -1,4 +1,3 @@
-
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8">
@@ -22,27 +21,25 @@
     <div class="row">
       <div class="col-md-4">
         <ul class="nav nav-pills nav-stacked">
-          <li role="presentation" class="active"><a href="/student/list">列表</a></li>
+          <li role="presentation"><a href="/stduent/list">列表</a></li>
           <li role="presentation"><a href="/student/add">新增</a></li>
+          <li role="presentation" class="active"><a href="#">修改</a></li>
           <li role="presentation"><a href="/student/search">搜索</a></li>
         </ul>
       </div>
       <div class="col-md-8">      
-        <table class="table table-hover">
-          <thead>
-          <th>ID</th><th>姓名</th><th>密码</th><th>头像</th><th>删除</th><th>修改</th><th>头像</th>
-          </thead>
-          <tbody>
-          <#list students as student>
-          <tr>
-          <td>${student.id}</td><td>${student.studentname}</td><td>${student.password}</td><td>${student.avatar}</td>
-          <td><a href="/student/delete/${student.id}">删除</a></td>
-          <td><a href="/stduent/modify/${stduent.id}">修改</a></td>
-          <td><a href="/student/add_avatar/${student.id}">上传</a></td>
-          </tr>
-          </#list>
-          </tbody>
-        </table>
+        <form action="/student/do_modify">
+            <input type="hidden"id="id" name="id" value="${stduent.id}">
+            <div class="form-group">
+                <label for="studentname">姓名</label>
+                <input type="text" class="form-control" id="stduentname" name="studentname" value="${student.studentname}" placeholder="请输入姓名">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" class="form-control" id="password" name="password" value="${student.password}" placeholder="请输入密码">
+            </div>
+            <button type="submit" class="btn btn-default">确认</button>
+        </form>
       </div>
     </div>
   </div>

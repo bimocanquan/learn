@@ -28,6 +28,7 @@ CREATE TABLE `student` (
   `register_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `enabled` tinyint(1) DEFAULT 1,
   `major` varchar(50) DEFAULT NULL comment '专业',
-
+  `avatar_url` varchar(200) DEFAULT '' comment '头像'
+   
   PRIMARY KEY (`id`)
 );

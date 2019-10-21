@@ -1,11 +1,18 @@
 package edu.hubu.learn.web;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.hubu.learn.entity.Student;
@@ -24,12 +31,18 @@ public class StudentController {
     @RequestMapping("/{id}")
     public ModelAndView student(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        Student student = studentService.getUser(id);
+        Student student = studentService.getStudent(id);
         mav.addObject("student", student);
         mav.setViewName("student");
         return mav;
     }
 
+    @RequestMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        ModelAndView mav = new ModelAndView("redirect:/student/list");
+        return mav;
+}
     
     @RequestMapping("/list")
     public ModelAndView students() {
@@ -38,5 +51,78 @@ public class StudentController {
         mav.addObject("students", students);
         mav.setViewName("students");
         return mav;
+    }
+
+     @RequestMapping("/add")
+    public ModelAndView addStudent() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("stduent_add");
+        return mav;
+    }
+
+    @RequestMapping("/do_add")
+    public ModelAndView doAddStudent(Student student) {
+        student.setAvatar("");
+        StudentService.addStudent(student);
+        ModelAndView mav = new ModelAndView("redirect:/student/list");
+        return mav;
+    }
+
+    @RequestMapping("/modify/{id}")
+    public ModelAndView modifyUser(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("stduent", stduentService.getStudent(id));
+        mav.setViewName("stduent_modify");
+        return mav;
+    }
+
+    @RequestMapping("/do_modify")
+    public ModelAndView doModifyUser(Student stduent) {
+        stduent.setAvatar("");
+        stduentService.modifyUser(student);
+        ModelAndView mav = new ModelAndView("redirect:/stduent/list");
+        return mav;
+    }
+
+    @RequestMapping("/search")
+    public ModelAndView searchStudent() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("stduent_search");
+        return mav;
+    }
+
+    @RequestMapping("/do_search")
+    public ModelAndView doSearchStudent(HttpServletRequest httpRequest) {
+        ModelAndView mav = new ModelAndView();
+        String keyword = httpRequest.getParameter("keyword");
+        List<Student> stduents = stduentService.searchStudent(keyword);
+        mav.addObject("stduents", students);
+        mav.setViewName("stduents");
+        return mav;
+    }
+
+    @RequestMapping("/add_avatar/{id}")
+    public ModelAndView addStudentAvatar(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("stduent", studentService.getStudent(id));
+        mav.setViewName("student_add_avatar");
+        return mav;
+    }
+
+    @RequestMapping("/do_add_avatar/{id}")
+    public ModelAndView doAddStudentAvatar(@RequestParam("avatar") MultipartFile file, @PathVariable Long id) {
+        try {
+            String fileName = file.getOriginalFilename();
+            String filePath = ResourceUtils.getURL("classpath:").getPath() + "../../../resources/main/static/";
+            File dest = new File(filePath + fileName);
+            log.info(dest.getAbsolutePath());
+            file.transferTo(dest);
+            Student student = stduentService.getStudent(id);
+            student.setAvatar(fileName);
+            studentService.modifyStudent(student);
+        } catch (Exception e) {
+            log.error("upload avatar error", e.getMessage());
+        }
+    return new ModelAndView("redirect:/student/list");   
     }
 }
