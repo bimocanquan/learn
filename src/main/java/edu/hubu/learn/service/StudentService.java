@@ -28,11 +28,11 @@ public class StudentService {
 
     public List<Student> searchStudent(String keyword) {
         Student student = new Student();
-        stduent.setStudentname(keyword);
+        student.setStudentname(keyword);
         ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("studentname", match->match.contains());
-        Example<Student> example = Example.of(stduent, matcher);
+        Example<Student> example = Example.of(student, matcher);
         Sort sort = new Sort(Direction.DESC, "id");
-        return stduentDao.findAll(example, sort);
+        return studentDao.findAll(example, sort);
     }
 
     public Student addStudent(Student student) {
@@ -43,7 +43,7 @@ public class StudentService {
         studentDao.deleteById(id);
     }
 
-    public void modifyUser(Student student) {
-	stduentDao.save(student);
+    public void modifyStudent(Student student) {
+	studentDao.save(student);
 	}
 }

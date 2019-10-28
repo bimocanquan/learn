@@ -41,7 +41,7 @@ public class IndexController {
     @RequestMapping("/student")
     public ModelAndView student() {
         ModelAndView mav = new ModelAndView();
-        Student student = studentService.getUser(1l);
+        Student student = studentService.getStudent(1l);
         mav.addObject("student", student);
         mav.setViewName("student");
         return mav;

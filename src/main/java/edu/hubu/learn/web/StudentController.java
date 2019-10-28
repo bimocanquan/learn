@@ -17,9 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.hubu.learn.entity.Student;
 import edu.hubu.learn.service.StudentService;
-
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 @RequestMapping("/student")
 public class StudentController {
 
@@ -56,14 +57,14 @@ public class StudentController {
      @RequestMapping("/add")
     public ModelAndView addStudent() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("stduent_add");
+        mav.setViewName("student_add");
         return mav;
     }
 
     @RequestMapping("/do_add")
     public ModelAndView doAddStudent(Student student) {
         student.setAvatar("");
-        StudentService.addStudent(student);
+        studentService.addStudent(student);
         ModelAndView mav = new ModelAndView("redirect:/student/list");
         return mav;
     }
@@ -71,23 +72,23 @@ public class StudentController {
     @RequestMapping("/modify/{id}")
     public ModelAndView modifyUser(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("stduent", stduentService.getStudent(id));
-        mav.setViewName("stduent_modify");
+        mav.addObject("student", studentService.getStudent(id));
+        mav.setViewName("student_modify");
         return mav;
     }
 
     @RequestMapping("/do_modify")
-    public ModelAndView doModifyUser(Student stduent) {
-        stduent.setAvatar("");
-        stduentService.modifyUser(student);
-        ModelAndView mav = new ModelAndView("redirect:/stduent/list");
+    public ModelAndView doModifyUser(Student student) {
+        student.setAvatar("");
+        studentService.modifyStudent(student);
+        ModelAndView mav = new ModelAndView("redirect:/student/list");
         return mav;
     }
 
     @RequestMapping("/search")
     public ModelAndView searchStudent() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("stduent_search");
+        mav.setViewName("student_search");
         return mav;
     }
 
@@ -95,8 +96,8 @@ public class StudentController {
     public ModelAndView doSearchStudent(HttpServletRequest httpRequest) {
         ModelAndView mav = new ModelAndView();
         String keyword = httpRequest.getParameter("keyword");
-        List<Student> stduents = stduentService.searchStudent(keyword);
-        mav.addObject("stduents", students);
+        List<Student> students = studentService.searchStudent(keyword);
+        mav.addObject("students", students);
         mav.setViewName("stduents");
         return mav;
     }
@@ -104,7 +105,7 @@ public class StudentController {
     @RequestMapping("/add_avatar/{id}")
     public ModelAndView addStudentAvatar(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("stduent", studentService.getStudent(id));
+        mav.addObject("student", studentService.getStudent(id));
         mav.setViewName("student_add_avatar");
         return mav;
     }
@@ -117,7 +118,7 @@ public class StudentController {
             File dest = new File(filePath + fileName);
             log.info(dest.getAbsolutePath());
             file.transferTo(dest);
-            Student student = stduentService.getStudent(id);
+            Student student = studentService.getStudent(id);
             student.setAvatar(fileName);
             studentService.modifyStudent(student);
         } catch (Exception e) {
