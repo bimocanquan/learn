@@ -21,14 +21,19 @@ ALTER TABLE `user` ADD UNIQUE (`phone`);
 DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
- `studentname` varchar(50) DEFAULT NULL comment '学生姓名',
+  `studentname` varchar(50) DEFAULT NULL comment '学生姓名',
   `password` varchar(255) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `register_date` timestamp DEFAULT CURRENT_TIMESTAMP,
   `enabled` tinyint(1) DEFAULT 1,
   `major` varchar(50) DEFAULT NULL comment '专业',
-  `avatar_url` varchar(200) DEFAULT '' comment '头像'
+  `avatar_url` varchar(200) DEFAULT '' comment '头像',
    
   PRIMARY KEY (`id`)
 );
+ALTER TABLE `student` ADD UNIQUE (`studentname`);
+
+ALTER TABLE `student` ADD UNIQUE (`email`);
+
+ALTER TABLE `student` ADD UNIQUE (`phone`);
