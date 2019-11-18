@@ -7,5 +7,5 @@ public enum StduentService {
 
 	public static void addStduent(Student stduent) {
 	}
-
+`
 }

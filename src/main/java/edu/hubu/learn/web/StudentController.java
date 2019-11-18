@@ -96,7 +96,7 @@ public class StudentController {
     public ModelAndView doSearchStudent(HttpServletRequest httpRequest) {
         ModelAndView mav = new ModelAndView();
         String keyword = httpRequest.getParameter("keyword");
-        List<Student> students = studentService.searchStudent(keyword);
+        List<Student> students = studentService.searchStudents(keyword);
         mav.addObject("students", students);
         mav.setViewName("stduents");
         return mav;
